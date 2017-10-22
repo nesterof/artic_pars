@@ -29,8 +29,13 @@ public class ParcerPdf implements Parcer {
         this.filePath = filePath;
     }
 
-    public Article parceMetadate(){
+    public List<Article> fillArticleMetadata(List<Article> articles){
 
+        for (Article article : articles){
+
+
+
+        }
         return null;
     }
 
@@ -43,10 +48,9 @@ public class ParcerPdf implements Parcer {
 
             COSDocument cosDoc = parser.getDocument();
 
-            parceTableContent();
-            PDFTextStripper pdfStripper = pdfStripper = new PDFTextStripper();
-            String parsedText = pdfStripper.getText(pdDoc);
+            List<Article> articles = parceTableContent();
 
+            articles = fillArticleMetadata(articles);
 
             return null;
         } catch (IOException e) {
@@ -58,7 +62,7 @@ public class ParcerPdf implements Parcer {
     }
 
     /**
-     *  Ищем и формируем ц"Cодержаине"
+     *  Ищем и формируем "Cодержаине"
      *
      * @return
      */
@@ -86,7 +90,6 @@ public class ParcerPdf implements Parcer {
                 break;
             }
 
-            Integer lastNumber = null;
             for(String line : text.split(System.lineSeparator())){
 
                 if(checkEndOfTableContent(line)){
@@ -99,19 +102,17 @@ public class ParcerPdf implements Parcer {
                 Integer currentPageNumber = StringUtils.getArticelPagesNumber(line);
                 if(currentPageNumber==null){
                     continue;
-                } else  {
-                    if(lastNumber != null) {
-                        articles.add(new Article(lastNumber, currentPageNumber-1));
-                    }
-                    lastNumber = currentPageNumber;
                 }
+                        articles.add(new Article(currentPageNumber));
+
+
             }
         }
         return articles;
     }
 
     private boolean checkEndOfTableContent(final String line) {
-        String testString = line.replace(System.lineSeparator(), "");
+        String testString = line.replace(System.lineSeparator(), "").trim();
         if(ParcerConst.STOP_WORDS.contains(testString)){
             return true;
         }

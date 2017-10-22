@@ -66,8 +66,7 @@ public class Article {
         this.relation = relation;
     }
 
-    public Article(int startPage, int endPage) {
+    public Article(int startPage) {
         this.startPage = startPage;
-        this.endPage = endPage;
     }
 }

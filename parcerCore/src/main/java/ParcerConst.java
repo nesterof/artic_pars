@@ -7,7 +7,7 @@ public class ParcerConst {
 
     static {
         // TODO сделать чтение из файла настроек
-        STOP_WORDS.addAll(Arrays.asList("Указатель авторов","Знания-Онтологии-Теории (ЗОНТ-17)"));
+        STOP_WORDS.addAll(Arrays.asList("Указатель авторов","Знания-Онтологии-Теории  (ЗОНТ-17)"));
     }
 
 }
